@@ -45,7 +45,7 @@ extern "C"
 #define OUTPUT_YUV420P 0
 //'1' Use Dshow 
 //'0' Use GDIgrab
-#define USE_DSHOW 1
+#define USE_DSHOW 0
 
 int main(int argc, char* argv[])
 {
