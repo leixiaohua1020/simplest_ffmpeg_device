@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "simplest_ffmpeg_readcamera", "simplest_ffmpeg_readcamera\simplest_ffmpeg_readcamera.vcxproj", "{4521BB2D-DC54-42D0-B6D0-AACEDDBE7CD6}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "simplest_ffmpeg_grabdesktop", "simplest_ffmpeg_grabdesktop\simplest_ffmpeg_grabdesktop.vcxproj", "{FA753B98-6955-4F5E-ABF5-B80DE733EDBC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4521BB2D-DC54-42D0-B6D0-AACEDDBE7CD6}.Debug|Win32.ActiveCfg = Debug|Win32
+		{4521BB2D-DC54-42D0-B6D0-AACEDDBE7CD6}.Debug|Win32.Build.0 = Debug|Win32
+		{4521BB2D-DC54-42D0-B6D0-AACEDDBE7CD6}.Release|Win32.ActiveCfg = Release|Win32
+		{4521BB2D-DC54-42D0-B6D0-AACEDDBE7CD6}.Release|Win32.Build.0 = Release|Win32
+		{FA753B98-6955-4F5E-ABF5-B80DE733EDBC}.Debug|Win32.ActiveCfg = Debug|Win32
+		{FA753B98-6955-4F5E-ABF5-B80DE733EDBC}.Debug|Win32.Build.0 = Debug|Win32
+		{FA753B98-6955-4F5E-ABF5-B80DE733EDBC}.Release|Win32.ActiveCfg = Release|Win32
+		{FA753B98-6955-4F5E-ABF5-B80DE733EDBC}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
