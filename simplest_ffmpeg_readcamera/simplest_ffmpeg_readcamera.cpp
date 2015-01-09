@@ -33,7 +33,7 @@
  */
 
 
-#include "stdafx.h"
+#include <stdio.h>
 
 extern "C"
 {
@@ -51,6 +51,24 @@ extern "C"
 //'1' Use Dshow 
 //'0' Use VFW
 #define USE_DSHOW 0
+
+
+//Refresh Event
+#define SFM_REFRESH_EVENT  (SDL_USEREVENT + 1)
+
+int thread_exit=0;
+
+int sfp_refresh_thread(void *opaque)
+{
+	while (thread_exit==0) {
+		SDL_Event event;
+		event.type = SFM_REFRESH_EVENT;
+		SDL_PushEvent(&event);
+		SDL_Delay(40);
+	}
+	return 0;
+}
+
 
 //Show Device
 void show_dshow_device(){
@@ -103,14 +121,17 @@ int main(int argc, char* argv[])
 
 	//Register Device
 	avdevice_register_all();
+
+//Windows
+#ifdef _WIN32
+
 	//Show Dshow Device
 	show_dshow_device();
 	//Show Device Options
 	show_dshow_device_option();
 	//Show VFW Options
 	show_vfw_device();
-//Windows
-#ifdef _WIN32
+
 #if USE_DSHOW
 	AVInputFormat *ifmt=av_find_input_format("dshow");
 	//Set own video device's name
@@ -188,6 +209,10 @@ int main(int argc, char* argv[])
 	SDL_Overlay *bmp; 
 	bmp = SDL_CreateYUVOverlay(pCodecCtx->width, pCodecCtx->height,SDL_YV12_OVERLAY, screen); 
 	SDL_Rect rect;
+	rect.x = 0;    
+	rect.y = 0;    
+	rect.w = screen_w;    
+	rect.h = screen_h;  
 	//SDL End------------------------
 	int ret, got_picture;
 
@@ -204,45 +229,62 @@ int main(int argc, char* argv[])
 	struct SwsContext *img_convert_ctx;
 	img_convert_ctx = sws_getContext(pCodecCtx->width, pCodecCtx->height, pCodecCtx->pix_fmt, pCodecCtx->width, pCodecCtx->height, PIX_FMT_YUV420P, SWS_BICUBIC, NULL, NULL, NULL); 
 	//------------------------------
-	while(av_read_frame(pFormatCtx, packet)>=0)
-	{
-		if(packet->stream_index==videoindex)
-		{
-			ret = avcodec_decode_video2(pCodecCtx, pFrame, &got_picture, packet);
-			if(ret < 0)
-			{
-				printf("Decode Error.£¨½âÂë´íÎó£©\n");
-				return -1;
+	SDL_Thread *video_tid = SDL_CreateThread(sfp_refresh_thread,NULL);
+	//
+	SDL_WM_SetCaption("Simple FFmpeg Read Camera",NULL);
+	//Event Loop
+	SDL_Event event;
+
+	for (;;) {
+		//Wait
+		SDL_WaitEvent(&event);
+		if(event.type==SFM_REFRESH_EVENT){
+			//------------------------------
+			if(av_read_frame(pFormatCtx, packet)>=0){
+				if(packet->stream_index==videoindex){
+					ret = avcodec_decode_video2(pCodecCtx, pFrame, &got_picture, packet);
+					if(ret < 0){
+						printf("Decode Error.£¨½âÂë´íÎó£©\n");
+						return -1;
+					}
+					if(got_picture){
+						sws_scale(img_convert_ctx, (const uint8_t* const*)pFrame->data, pFrame->linesize, 0, pCodecCtx->height, pFrameYUV->data, pFrameYUV->linesize);
+
+#if OUTPUT_YUV420P  
+						int y_size=pCodecCtx->width*pCodecCtx->height;    
+						fwrite(pFrameYUV->data[0],1,y_size,fp_yuv);    //Y   
+						fwrite(pFrameYUV->data[1],1,y_size/4,fp_yuv);  //U  
+						fwrite(pFrameYUV->data[2],1,y_size/4,fp_yuv);  //V  
+#endif  
+
+
+						SDL_LockYUVOverlay(bmp);
+						bmp->pixels[0]=pFrameYUV->data[0];
+						bmp->pixels[2]=pFrameYUV->data[1];
+						bmp->pixels[1]=pFrameYUV->data[2];     
+						bmp->pitches[0]=pFrameYUV->linesize[0];
+						bmp->pitches[2]=pFrameYUV->linesize[1];   
+						bmp->pitches[1]=pFrameYUV->linesize[2];
+						SDL_UnlockYUVOverlay(bmp); 
+						//²âÊÔ×Ô¼ºÌî³äÊý¾Ý----------------
+						SDL_DisplayYUVOverlay(bmp, &rect); 
+
+					}
+				}
+				av_free_packet(packet);
+			}else{
+				//Exit Thread
+				thread_exit=1;
+				break;
 			}
-			if(got_picture)
-			{
-				sws_scale(img_convert_ctx, (const uint8_t* const*)pFrame->data, pFrame->linesize, 0, pCodecCtx->height, pFrameYUV->data, pFrameYUV->linesize);
-				
-#if OUTPUT_YUV420P
-				int y_size=pCodecCtx->width*pCodecCtx->height;  
-				fwrite(pFrameYUV->data[0],1,y_size,fp_yuv);    //Y 
-				fwrite(pFrameYUV->data[1],1,y_size/4,fp_yuv);  //U
-				fwrite(pFrameYUV->data[2],1,y_size/4,fp_yuv);  //V
-#endif
-				SDL_LockYUVOverlay(bmp);
-				bmp->pixels[0]=pFrameYUV->data[0];
-				bmp->pixels[2]=pFrameYUV->data[1];
-				bmp->pixels[1]=pFrameYUV->data[2];     
-				bmp->pitches[0]=pFrameYUV->linesize[0];
-				bmp->pitches[2]=pFrameYUV->linesize[1];   
-				bmp->pitches[1]=pFrameYUV->linesize[2];
-				SDL_UnlockYUVOverlay(bmp); 
-				rect.x = 0;    
-				rect.y = 0;    
-				rect.w = screen_w;    
-				rect.h = screen_h;  
-				SDL_DisplayYUVOverlay(bmp, &rect); 
-				//Delay 40ms
-				SDL_Delay(40);
-			}
+		}else if(event.type==SDL_QUIT){
+			thread_exit=1;
+			break;
 		}
-		av_free_packet(packet);
+
 	}
+	
+
 	sws_freeContext(img_convert_ctx);
 
 #if OUTPUT_YUV420P 
