@@ -1,3 +1,6 @@
 #¹ıÂË
 Debug/
 Release/
+
+*.exe
+*.obj
