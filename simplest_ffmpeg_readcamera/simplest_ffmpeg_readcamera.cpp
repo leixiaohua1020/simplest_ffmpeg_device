@@ -35,16 +35,33 @@
 
 #include <stdio.h>
 
+#define __STDC_CONSTANT_MACROS
+
+#ifdef _WIN32
+//Windows
 extern "C"
 {
 #include "libavcodec/avcodec.h"
 #include "libavformat/avformat.h"
 #include "libswscale/swscale.h"
 #include "libavdevice/avdevice.h"
-	//SDL
 #include "sdl/SDL.h"
-#include "sdl/SDL_thread.h"
 };
+#else
+//Linux...
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+#include <libavcodec/avcodec.h>
+#include <libavformat/avformat.h>
+#include <libswscale/swscale.h>
+#include <libavdevice/avdevice.h>
+#include <sdl/SDL.h>
+#ifdef __cplusplus
+};
+#endif
+#endif
 
 //Output YUV420P 
 #define OUTPUT_YUV420P 0
@@ -102,7 +119,6 @@ void show_vfw_device(){
 }
 
 
-
 int main(int argc, char* argv[])
 {
 
@@ -136,13 +152,13 @@ int main(int argc, char* argv[])
 	AVInputFormat *ifmt=av_find_input_format("dshow");
 	//Set own video device's name
 	if(avformat_open_input(&pFormatCtx,"video=Integrated Camera",ifmt,NULL)!=0){
-		printf("Couldn't open input stream.（无法打开输入流）\n");
+		printf("Couldn't open input stream.\n");
 		return -1;
 	}
 #else
 	AVInputFormat *ifmt=av_find_input_format("vfwcap");
 	if(avformat_open_input(&pFormatCtx,"0",ifmt,NULL)!=0){
-		printf("Couldn't open input stream.（无法打开输入流）\n");
+		printf("Couldn't open input stream.\n");
 		return -1;
 	}
 #endif
@@ -151,7 +167,7 @@ int main(int argc, char* argv[])
 #ifdef linux
 	AVInputFormat *ifmt=av_find_input_format("video4linux2");
 	if(avformat_open_input(&pFormatCtx,"/dev/video0",ifmt,NULL)!=0){
-		printf("Couldn't open input stream.（无法打开输入流）\n");
+		printf("Couldn't open input stream.\n");
 		return -1;
 	}
 #endif
@@ -159,7 +175,7 @@ int main(int argc, char* argv[])
 
 	if(avformat_find_stream_info(pFormatCtx,NULL)<0)
 	{
-		printf("Couldn't find stream information.（无法获取流信息）\n");
+		printf("Couldn't find stream information.\n");
 		return -1;
 	}
 	videoindex=-1;
@@ -171,19 +187,19 @@ int main(int argc, char* argv[])
 		}
 	if(videoindex==-1)
 	{
-		printf("Couldn't find a video stream.（没有找到视频流）\n");
+		printf("Couldn't find a video stream.\n");
 		return -1;
 	}
 	pCodecCtx=pFormatCtx->streams[videoindex]->codec;
 	pCodec=avcodec_find_decoder(pCodecCtx->codec_id);
 	if(pCodec==NULL)
 	{
-		printf("Codec not found.（没有找到解码器）\n");
+		printf("Codec not found.\n");
 		return -1;
 	}
 	if(avcodec_open2(pCodecCtx, pCodec,NULL)<0)
 	{
-		printf("Could not open codec.（无法打开解码器）\n");
+		printf("Could not open codec.\n");
 		return -1;
 	}
 	AVFrame	*pFrame,*pFrameYUV;
@@ -217,10 +233,6 @@ int main(int argc, char* argv[])
 	int ret, got_picture;
 
 	AVPacket *packet=(AVPacket *)av_malloc(sizeof(AVPacket));
-	//Output Information-----------------------------
-	printf("File Information（文件信息）---------------------\n");
-	av_dump_format(pFormatCtx,0,NULL,0);
-	printf("-------------------------------------------------\n");
 
 #if OUTPUT_YUV420P 
     FILE *fp_yuv=fopen("output.yuv","wb+");  
@@ -231,7 +243,7 @@ int main(int argc, char* argv[])
 	//------------------------------
 	SDL_Thread *video_tid = SDL_CreateThread(sfp_refresh_thread,NULL);
 	//
-	SDL_WM_SetCaption("Simple FFmpeg Read Camera",NULL);
+	SDL_WM_SetCaption("Simplest FFmpeg Read Camera",NULL);
 	//Event Loop
 	SDL_Event event;
 
@@ -244,7 +256,7 @@ int main(int argc, char* argv[])
 				if(packet->stream_index==videoindex){
 					ret = avcodec_decode_video2(pCodecCtx, pFrame, &got_picture, packet);
 					if(ret < 0){
-						printf("Decode Error.（解码错误）\n");
+						printf("Decode Error.\n");
 						return -1;
 					}
 					if(got_picture){
@@ -266,7 +278,7 @@ int main(int argc, char* argv[])
 						bmp->pitches[2]=pFrameYUV->linesize[1];   
 						bmp->pitches[1]=pFrameYUV->linesize[2];
 						SDL_UnlockYUVOverlay(bmp); 
-						//测试自己填充数据----------------
+						
 						SDL_DisplayYUVOverlay(bmp, &rect); 
 
 					}

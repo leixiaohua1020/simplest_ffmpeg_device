@@ -1,0 +1,113 @@
+[dshow @ 02fbc7e0] DirectShow video devices (some may be both video and audio devices)
+[dshow @ 02fbc7e0]  "e2eSoft VCam"
+[dshow @ 02fbc7e0]     Alternative name "@device_pnp_\\?\root#media#0000#{65e8773d-8f56-11d0-a3b9-00a0c9223196}\global"
+[dshow @ 02fbc7e0]  "Integrated Camera"
+[dshow @ 02fbc7e0]     Alternative name "@device_pnp_\\?\usb#vid_04f2&pid_b221&mi_00#7&3343a5b1&0&0000#{65e8773d-8f56-11d0-a3b9-00a0c9223196}\global"
+[dshow @ 02fbc7e0]  "screen-capture-recorder"
+[dshow @ 02fbc7e0]     Alternative name "@device_sw_{860BB310-5D01-11D0-BD3B-00A0C911CE86}\{4EA6930A-2C8A-4AE6-A561-56E4B5044439}"
+[dshow @ 02fbc7e0] DirectShow audio devices
+[dshow @ 02fbc7e0]  "内装麦克风 (Conexant 20672 SmartAudi"
+[dshow @ 02fbc7e0]     Alternative name "@device_cm_{33D9A762-90C8-11D0-BD43-00A0C911CE86}\内装麦克风 (Conexant 20672 SmartAudi"
+[dshow @ 02fbc7e0]  "virtual-audio-capturer"
+[dshow @ 02fbc7e0]     Alternative name "@device_sw_{33D9A762-90C8-11D0-BD43-00A0C911CE86}\{8E14549B-DB61-4309-AFA1-3578E927E935}"
+[dshow @ 02fbc7e0] DirectShow video device options (from video devices)
+[dshow @ 02fbc7e0]  Pin "捕获" (alternative pin name "0")
+[dshow @ 02fbc7e0]   pixel_format=bgr24  min s=640x480 fps=15 max s=640x480 fps=30
+[dshow @ 02fbc7e0]   pixel_format=bgr24  min s=640x360 fps=15 max s=640x360 fps=30
+[dshow @ 02fbc7e0]   pixel_format=bgr24  min s=352x288 fps=15 max s=352x288 fps=30
+[dshow @ 02fbc7e0]   pixel_format=bgr24  min s=320x240 fps=15 max s=320x240 fps=30
+[dshow @ 02fbc7e0]   pixel_format=bgr24  min s=800x448 fps=1 max s=800x448 fps=15
+[dshow @ 02fbc7e0]   pixel_format=bgr24  min s=960x544 fps=1 max s=960x544 fps=10
+[dshow @ 02fbc7e0]   pixel_format=bgr24  min s=1280x720 fps=1 max s=1280x720 fps=10
+[dshow @ 02fbc7e0]   pixel_format=bgr24  min s=424x240 fps=15 max s=424x240 fps=30
+[dshow @ 02fbc7e0]   pixel_format=yuyv422  min s=640x480 fps=15 max s=640x480 fps=30
+[dshow @ 02fbc7e0]   pixel_format=yuyv422  min s=640x360 fps=15 max s=640x360 fps=30
+[dshow @ 02fbc7e0]   pixel_format=yuyv422  min s=352x288 fps=15 max s=352x288 fps=30
+[dshow @ 02fbc7e0]   pixel_format=yuyv422  min s=320x240 fps=15 max s=320x240 fps=30
+[dshow @ 02fbc7e0]   pixel_format=yuyv422  min s=800x448 fps=1 max s=800x448 fps=15
+[dshow @ 02fbc7e0]   pixel_format=yuyv422  min s=960x544 fps=1 max s=960x544 fps=10
+[dshow @ 02fbc7e0]   pixel_format=yuyv422  min s=1280x720 fps=1 max s=1280x720 fps=10
+[dshow @ 02fbc7e0]   pixel_format=yuyv422  min s=424x240 fps=15 max s=424x240 fps=30
+[dshow @ 02fbc7e0]   vcodec=mjpeg  min s=640x480 fps=15 max s=640x480 fps=30
+[dshow @ 02fbc7e0]   vcodec=mjpeg  min s=640x360 fps=15 max s=640x360 fps=30
+[dshow @ 02fbc7e0]   vcodec=mjpeg  min s=352x288 fps=15 max s=352x288 fps=30
+[dshow @ 02fbc7e0]   vcodec=mjpeg  min s=320x240 fps=15 max s=320x240 fps=30
+[dshow @ 02fbc7e0]   vcodec=mjpeg  min s=800x448 fps=15 max s=800x448 fps=30
+[dshow @ 02fbc7e0]   vcodec=mjpeg  min s=960x544 fps=15 max s=960x544 fps=30
+[dshow @ 02fbc7e0]   vcodec=mjpeg  min s=1280x720 fps=15 max s=1280x720 fps=30
+[vfwcap @ 02fbc7e0] Driver 0
+[vfwcap @ 02fbc7e0]  Microsoft WDM Image Capture (Win32)
+[vfwcap @ 02fbc7e0]  Version:  6.1.7601.17514
+[vfwcap @ 01faf9e0] real-time buffer 90% full! frame dropped!
+[vfwcap @ 01faf9e0] real-time buffer 90% full! frame dropped!
+[vfwcap @ 01faf9e0] real-time buffer 121% full! frame dropped!
+[vfwcap @ 01faf9e0] real-time buffer 121% full! frame dropped!
+[vfwcap @ 01faf9e0] real-time buffer 121% full! frame dropped!
+[vfwcap @ 01faf9e0] real-time buffer 121% full! frame dropped!
+[vfwcap @ 01faf9e0] real-time buffer 121% full! frame dropped!
+[vfwcap @ 01faf9e0] real-time buffer 121% full! frame dropped!
+[vfwcap @ 01faf9e0] real-time buffer 121% full! frame dropped!
+[vfwcap @ 01faf9e0] real-time buffer 121% full! frame dropped!
+[vfwcap @ 01faf9e0] real-time buffer 121% full! frame dropped!
+[vfwcap @ 01faf9e0] real-time buffer 121% full! frame dropped!
+[vfwcap @ 01faf9e0] real-time buffer 121% full! frame dropped!
+[vfwcap @ 01faf9e0] real-time buffer 121% full! frame dropped!
+[vfwcap @ 01faf9e0] real-time buffer 121% full! frame dropped!
+[vfwcap @ 01faf9e0] real-time buffer 121% full! frame dropped!
+[vfwcap @ 01faf9e0] real-time buffer 90% full! frame dropped!
+[vfwcap @ 01faf9e0] real-time buffer 90% full! frame dropped!
+[vfwcap @ 01faf9e0] real-time buffer 90% full! frame dropped!
+[vfwcap @ 01faf9e0] real-time buffer 90% full! frame dropped!
+[vfwcap @ 01faf9e0] real-time buffer 90% full! frame dropped!
+[vfwcap @ 01faf9e0] real-time buffer 90% full! frame dropped!
+[vfwcap @ 01faf9e0] real-time buffer 90% full! frame dropped!
+[vfwcap @ 01faf9e0] real-time buffer 90% full! frame dropped!
+[vfwcap @ 01faf9e0] real-time buffer 90% full! frame dropped!
+[vfwcap @ 01faf9e0] real-time buffer 90% full! frame dropped!
+[vfwcap @ 01faf9e0] real-time buffer 90% full! frame dropped!
+[vfwcap @ 01faf9e0] real-time buffer 90% full! frame dropped!
+[vfwcap @ 01faf9e0] real-time buffer 90% full! frame dropped!
+[vfwcap @ 01faf9e0] real-time buffer 90% full! frame dropped!
+[vfwcap @ 01faf9e0] real-time buffer 90% full! frame dropped!
+[vfwcap @ 01faf9e0] real-time buffer 90% full! frame dropped!
+[vfwcap @ 01faf9e0] real-time buffer 90% full! frame dropped!
+[vfwcap @ 01faf9e0] real-time buffer 90% full! frame dropped!
+[vfwcap @ 01faf9e0] real-time buffer 121% full! frame dropped!
+[vfwcap @ 01faf9e0] real-time buffer 121% full! frame dropped!
+[vfwcap @ 01faf9e0] real-time buffer 121% full! frame dropped!
+[vfwcap @ 01faf9e0] real-time buffer 121% full! frame dropped!
+[vfwcap @ 01faf9e0] real-time buffer 121% full! frame dropped!
+[vfwcap @ 01faf9e0] real-time buffer 121% full! frame dropped!
+[vfwcap @ 01faf9e0] real-time buffer 121% full! frame dropped!
+[vfwcap @ 01faf9e0] real-time buffer 121% full! frame dropped!
+[vfwcap @ 01faf9e0] real-time buffer 121% full! frame dropped!
+[vfwcap @ 01faf9e0] real-time buffer 121% full! frame dropped!
+[vfwcap @ 01faf9e0] real-time buffer 121% full! frame dropped!
+[vfwcap @ 01faf9e0] real-time buffer 121% full! frame dropped!
+[vfwcap @ 01faf9e0] real-time buffer 121% full! frame dropped!
+[vfwcap @ 01faf9e0] real-time buffer 90% full! frame dropped!
+[vfwcap @ 01faf9e0] real-time buffer 90% full! frame dropped!
+[vfwcap @ 01faf9e0] real-time buffer 90% full! frame dropped!
+[vfwcap @ 01faf9e0] real-time buffer 90% full! frame dropped!
+[vfwcap @ 01faf9e0] real-time buffer 90% full! frame dropped!
+[vfwcap @ 01faf9e0] real-time buffer 90% full! frame dropped!
+[vfwcap @ 01faf9e0] real-time buffer 90% full! frame dropped!
+[vfwcap @ 01faf9e0] real-time buffer 90% full! frame dropped!
+[vfwcap @ 01faf9e0] real-time buffer 90% full! frame dropped!
+[vfwcap @ 01faf9e0] real-time buffer 90% full! frame dropped!
+[vfwcap @ 01faf9e0] real-time buffer 90% full! frame dropped!
+[vfwcap @ 01faf9e0] real-time buffer 90% full! frame dropped!
+[vfwcap @ 01faf9e0] real-time buffer 90% full! frame dropped!
+[vfwcap @ 01faf9e0] real-time buffer 90% full! frame dropped!
+[vfwcap @ 01faf9e0] real-time buffer 90% full! frame dropped!
+[vfwcap @ 01faf9e0] real-time buffer 90% full! frame dropped!
+[vfwcap @ 01faf9e0] real-time buffer 121% full! frame dropped!
+[vfwcap @ 01faf9e0] real-time buffer 121% full! frame dropped!
+[vfwcap @ 01faf9e0] real-time buffer 121% full! frame dropped!
+[vfwcap @ 01faf9e0] real-time buffer 121% full! frame dropped!
+[vfwcap @ 01faf9e0] real-time buffer 121% full! frame dropped!
+[vfwcap @ 01faf9e0] real-time buffer 121% full! frame dropped!
+[vfwcap @ 01faf9e0] real-time buffer 121% full! frame dropped!
+[vfwcap @ 01faf9e0] real-time buffer 121% full! frame dropped!
+[vfwcap @ 01faf9e0] real-time buffer 121% full! frame dropped!
+[vfwcap @ 01faf9e0] real-time buffer 121% full! frame dropped!

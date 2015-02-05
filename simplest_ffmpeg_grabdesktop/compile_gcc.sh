@@ -9,4 +9,5 @@
 #http://blog.csdn.net/leixiaohua1020
 #
 #compile
-gcc simplest_ffmpeg_grabdesktop.cpp -g -o simplest_ffmpeg_grabdesktop.out -lSDLmain -lSDL -lavformat -lavcodec -lavutil -lswscale
+gcc simplest_ffmpeg_grabdesktop.cpp -g -o simplest_ffmpeg_grabdesktop.out \
+-I /usr/local/include -L /usr/local/lib -lSDLmain -lSDL -lavformat -lavcodec -lavutil -lavdevice -lswscale
