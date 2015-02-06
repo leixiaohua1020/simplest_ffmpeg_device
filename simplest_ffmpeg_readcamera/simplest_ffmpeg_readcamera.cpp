@@ -87,35 +87,46 @@ int sfp_refresh_thread(void *opaque)
 }
 
 
-//Show Device
+//Show Dshow Device
 void show_dshow_device(){
 	AVFormatContext *pFormatCtx = avformat_alloc_context();
 	AVDictionary* options = NULL;
 	av_dict_set(&options,"list_devices","true",0);
 	AVInputFormat *iformat = av_find_input_format("dshow");
-	printf("Device Info=============\n");
+	printf("========Device Info=============\n");
 	avformat_open_input(&pFormatCtx,"video=dummy",iformat,&options);
-	printf("========================\n");
+	printf("================================\n");
 }
 
-//Show Device Option
+//Show Dshow Device Option
 void show_dshow_device_option(){
 	AVFormatContext *pFormatCtx = avformat_alloc_context();
 	AVDictionary* options = NULL;
 	av_dict_set(&options,"list_options","true",0);
 	AVInputFormat *iformat = av_find_input_format("dshow");
-	printf("Device Option Info======\n");
+	printf("========Device Option Info======\n");
 	avformat_open_input(&pFormatCtx,"video=Integrated Camera",iformat,&options);
-	printf("========================\n");
+	printf("================================\n");
 }
 
 //Show VFW Device
 void show_vfw_device(){
 	AVFormatContext *pFormatCtx = avformat_alloc_context();
 	AVInputFormat *iformat = av_find_input_format("vfwcap");
-	printf("VFW Device Info======\n");
+	printf("========VFW Device Info======\n");
 	avformat_open_input(&pFormatCtx,"list",iformat,NULL);
-	printf("=====================\n");
+	printf("=============================\n");
+}
+
+//Show AVFoundation Device
+void show_avfoundation_device(){
+    AVFormatContext *pFormatCtx = avformat_alloc_context();
+    AVDictionary* options = NULL;
+    av_dict_set(&options,"list_devices","true",0);
+    AVInputFormat *iformat = av_find_input_format("avfoundation");
+    printf("==AVFoundation Device Info===\n");
+    avformat_open_input(&pFormatCtx,"",iformat,&options);
+    printf("=============================\n");
 }
 
 
@@ -145,8 +156,8 @@ int main(int argc, char* argv[])
 	show_dshow_device();
 	//Show Device Options
 	show_dshow_device_option();
-	//Show VFW Options
-	show_vfw_device();
+    //Show VFW Options
+    show_vfw_device();
 
 #if USE_DSHOW
 	AVInputFormat *ifmt=av_find_input_format("dshow");
@@ -162,14 +173,23 @@ int main(int argc, char* argv[])
 		return -1;
 	}
 #endif
-#endif
-//Linux
-#ifdef linux
+#elif defined linux
+    //Linux
 	AVInputFormat *ifmt=av_find_input_format("video4linux2");
 	if(avformat_open_input(&pFormatCtx,"/dev/video0",ifmt,NULL)!=0){
 		printf("Couldn't open input stream.\n");
 		return -1;
 	}
+#else
+    show_avfoundation_device();
+    //Mac
+    AVInputFormat *ifmt=av_find_input_format("avfoundation");
+    //Avfoundation
+    //[video]:[audio]
+    if(avformat_open_input(&pFormatCtx,"0",ifmt,NULL)!=0){
+        printf("Couldn't open input stream.\n");
+        return -1;
+    }
 #endif
 
 
@@ -203,8 +223,8 @@ int main(int argc, char* argv[])
 		return -1;
 	}
 	AVFrame	*pFrame,*pFrameYUV;
-	pFrame=avcodec_alloc_frame();
-	pFrameYUV=avcodec_alloc_frame();
+	pFrame=av_frame_alloc();
+	pFrameYUV=av_frame_alloc();
 	uint8_t *out_buffer=(uint8_t *)av_malloc(avpicture_get_size(PIX_FMT_YUV420P, pCodecCtx->width, pCodecCtx->height));
 	avpicture_fill((AVPicture *)pFrameYUV, out_buffer, PIX_FMT_YUV420P, pCodecCtx->width, pCodecCtx->height);
 	//SDL----------------------------

@@ -80,7 +80,27 @@ int sfp_refresh_thread(void *opaque)
 	return 0;
 }
 
+//Show Dshow Device
+void show_dshow_device(){
+    AVFormatContext *pFormatCtx = avformat_alloc_context();
+    AVDictionary* options = NULL;
+    av_dict_set(&options,"list_devices","true",0);
+    AVInputFormat *iformat = av_find_input_format("dshow");
+    printf("========Device Info=============\n");
+    avformat_open_input(&pFormatCtx,"video=dummy",iformat,&options);
+    printf("================================\n");
+}
 
+//Show AVFoundation Device
+void show_avfoundation_device(){
+    AVFormatContext *pFormatCtx = avformat_alloc_context();
+    AVDictionary* options = NULL;
+    av_dict_set(&options,"list_devices","true",0);
+    AVInputFormat *iformat = av_find_input_format("avfoundation");
+    printf("==AVFoundation Device Info===\n");
+    avformat_open_input(&pFormatCtx,"",iformat,&options);
+    printf("=============================\n");
+}
 
 
 
@@ -135,7 +155,7 @@ int main(int argc, char* argv[])
 	}
 
 #endif
-#else
+#elif defined linux
 	//Linux
 	AVDictionary* options = NULL;
 	//Set some options
@@ -151,6 +171,16 @@ int main(int argc, char* argv[])
 		printf("Couldn't open input stream.\n");
 		return -1;
 	}
+#else
+    show_avfoundation_device();
+    //Mac
+    AVInputFormat *ifmt=av_find_input_format("avfoundation");
+    //Avfoundation
+    //[video]:[audio]
+    if(avformat_open_input(&pFormatCtx,"1",ifmt,NULL)!=0){
+        printf("Couldn't open input stream.\n");
+        return -1;
+    }
 #endif
 
 	if(avformat_find_stream_info(pFormatCtx,NULL)<0)
@@ -183,8 +213,8 @@ int main(int argc, char* argv[])
 		return -1;
 	}
 	AVFrame	*pFrame,*pFrameYUV;
-	pFrame=avcodec_alloc_frame();
-	pFrameYUV=avcodec_alloc_frame();
+	pFrame=av_frame_alloc();
+	pFrameYUV=av_frame_alloc();
 	uint8_t *out_buffer=(uint8_t *)av_malloc(avpicture_get_size(PIX_FMT_YUV420P, pCodecCtx->width, pCodecCtx->height));
 	avpicture_fill((AVPicture *)pFrameYUV, out_buffer, PIX_FMT_YUV420P, pCodecCtx->width, pCodecCtx->height);
 	//SDL----------------------------
