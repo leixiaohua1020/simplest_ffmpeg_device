@@ -40,7 +40,7 @@ extern "C"
 #include "libavformat/avformat.h"
 #include "libswscale/swscale.h"
 #include "libavdevice/avdevice.h"
-#include "sdl/SDL.h"
+#include "SDL/SDL.h"
 };
 #else
 //Linux...
@@ -52,7 +52,7 @@ extern "C"
 #include <libavformat/avformat.h>
 #include <libswscale/swscale.h>
 #include <libavdevice/avdevice.h>
-#include <sdl/SDL.h>
+#include <SDL/SDL.h>
 #ifdef __cplusplus
 };
 #endif
