@@ -59,7 +59,7 @@ extern "C"
 #endif
 
 //Output YUV420P 
-#define OUTPUT_YUV420P 1
+#define OUTPUT_YUV420P 0
 //'1' Use Dshow 
 //'0' Use GDIgrab
 #define USE_DSHOW 0
