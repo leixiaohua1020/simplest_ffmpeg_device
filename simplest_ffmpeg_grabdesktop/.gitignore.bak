@@ -1,0 +1,7 @@
+#¹ıÂË
+Debug/
+Release/
+
+*.yuv
+*.exe
+*.obj
