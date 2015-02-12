@@ -59,7 +59,7 @@ extern "C"
 #endif
 
 //Output YUV420P 
-#define OUTPUT_YUV420P 0
+#define OUTPUT_YUV420P 1
 //'1' Use Dshow 
 //'0' Use GDIgrab
 #define USE_DSHOW 0
@@ -215,8 +215,8 @@ int main(int argc, char* argv[])
 	AVFrame	*pFrame,*pFrameYUV;
 	pFrame=av_frame_alloc();
 	pFrameYUV=av_frame_alloc();
-	uint8_t *out_buffer=(uint8_t *)av_malloc(avpicture_get_size(PIX_FMT_YUV420P, pCodecCtx->width, pCodecCtx->height));
-	avpicture_fill((AVPicture *)pFrameYUV, out_buffer, PIX_FMT_YUV420P, pCodecCtx->width, pCodecCtx->height);
+	//uint8_t *out_buffer=(uint8_t *)av_malloc(avpicture_get_size(PIX_FMT_YUV420P, pCodecCtx->width, pCodecCtx->height));
+	//avpicture_fill((AVPicture *)pFrameYUV, out_buffer, PIX_FMT_YUV420P, pCodecCtx->width, pCodecCtx->height);
 	//SDL----------------------------
 	if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER)) {  
 		printf( "Could not initialize SDL - %s\n", SDL_GetError()); 
@@ -272,6 +272,13 @@ int main(int argc, char* argv[])
 						return -1;
 					}
 					if(got_picture){
+						SDL_LockYUVOverlay(bmp);
+						pFrameYUV->data[0]=bmp->pixels[0];
+						pFrameYUV->data[1]=bmp->pixels[2];
+						pFrameYUV->data[2]=bmp->pixels[1];     
+						pFrameYUV->linesize[0]=bmp->pitches[0];
+						pFrameYUV->linesize[1]=bmp->pitches[2];   
+						pFrameYUV->linesize[2]=bmp->pitches[1];
 						sws_scale(img_convert_ctx, (const uint8_t* const*)pFrame->data, pFrame->linesize, 0, pCodecCtx->height, pFrameYUV->data, pFrameYUV->linesize);
 
 #if OUTPUT_YUV420P  
@@ -280,14 +287,6 @@ int main(int argc, char* argv[])
 						fwrite(pFrameYUV->data[1],1,y_size/4,fp_yuv);  //U  
 						fwrite(pFrameYUV->data[2],1,y_size/4,fp_yuv);  //V  
 #endif  
-
-						SDL_LockYUVOverlay(bmp);
-						bmp->pixels[0]=pFrameYUV->data[0];
-						bmp->pixels[2]=pFrameYUV->data[1];
-						bmp->pixels[1]=pFrameYUV->data[2];     
-						bmp->pitches[0]=pFrameYUV->linesize[0];
-						bmp->pitches[2]=pFrameYUV->linesize[1];   
-						bmp->pitches[1]=pFrameYUV->linesize[2];
 						SDL_UnlockYUVOverlay(bmp); 
 						
 						SDL_DisplayYUVOverlay(bmp, &rect); 
@@ -316,7 +315,7 @@ int main(int argc, char* argv[])
 
 	SDL_Quit();
 
-	av_free(out_buffer);
+	//av_free(out_buffer);
 	av_free(pFrameYUV);
 	avcodec_close(pCodecCtx);
 	avformat_close_input(&pFormatCtx);
