@@ -15,7 +15,8 @@
  *  1.gdigrab: Win32下的基于GDI的屏幕录制设备。
  *             抓取桌面的时候，输入URL为“desktop”。
  *  2.dshow: 使用Directshow。注意需要安装额外的软件screen-capture-recorder
- * 在Linux下则可以使用x11grab录制屏幕。
+ * 在Linux下可以使用x11grab录制屏幕。
+ * 在MacOS下可以使用avfoundation录制屏幕。
  *
  * This software capture screen of computer. It's the simplest example
  * about usage of FFmpeg's libavdevice Library. 
@@ -25,6 +26,7 @@
  *             Input URL in avformat_open_input() is "desktop".
  *  2.dshow: Use Directshow. Need to install screen-capture-recorder.
  * It use x11grab to capture screen in Linux.
+ * It use avfoundation to capture screen in MacOS.
  */
 
 
@@ -67,16 +69,25 @@ extern "C"
 //Refresh Event
 #define SFM_REFRESH_EVENT  (SDL_USEREVENT + 1)
 
+#define SFM_BREAK_EVENT  (SDL_USEREVENT + 2)
+
 int thread_exit=0;
 
 int sfp_refresh_thread(void *opaque)
 {
-	while (thread_exit==0) {
+	thread_exit=0;
+	while (!thread_exit) {
 		SDL_Event event;
 		event.type = SFM_REFRESH_EVENT;
 		SDL_PushEvent(&event);
 		SDL_Delay(40);
 	}
+	thread_exit=0;
+	//Break
+	SDL_Event event;
+	event.type = SFM_BREAK_EVENT;
+	SDL_PushEvent(&event);
+
 	return 0;
 }
 
@@ -297,10 +308,10 @@ int main(int argc, char* argv[])
 			}else{
 				//Exit Thread
 				thread_exit=1;
-				break;
 			}
 		}else if(event.type==SDL_QUIT){
 			thread_exit=1;
+		}else if(event.type==SFM_BREAK_EVENT){
 			break;
 		}
 

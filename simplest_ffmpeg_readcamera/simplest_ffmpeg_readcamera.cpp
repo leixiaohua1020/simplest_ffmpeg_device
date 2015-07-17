@@ -17,7 +17,8 @@
  *  2.dshow: 使用Directshow。注意作者机器上的摄像头设备名称是
  *         “Integrated Camera”，使用的时候需要改成自己电脑上摄像头设
  *          备的名称。
- * 在Linux下则可以使用video4linux2读取摄像头设备。
+ * 在Linux下可以使用video4linux2读取摄像头设备。
+ * 在MacOS下可以使用avfoundation读取摄像头设备。
  *
  * This software read data from Computer's Camera and play it.
  * It's the simplest example about usage of FFmpeg's libavdevice Library. 
@@ -29,6 +30,7 @@
  *  2.dshow: Use Directshow. Camera's name in author's computer is 
  *             "Integrated Camera".
  * It use video4linux2 to read Camera in Linux.
+ * It use avfoundation to read Camera in MacOS.
  * 
  */
 
@@ -73,16 +75,25 @@ extern "C"
 //Refresh Event
 #define SFM_REFRESH_EVENT  (SDL_USEREVENT + 1)
 
+#define SFM_BREAK_EVENT  (SDL_USEREVENT + 2)
+
 int thread_exit=0;
 
 int sfp_refresh_thread(void *opaque)
 {
-	while (thread_exit==0) {
+	thread_exit=0;
+	while (!thread_exit) {
 		SDL_Event event;
 		event.type = SFM_REFRESH_EVENT;
 		SDL_PushEvent(&event);
 		SDL_Delay(40);
 	}
+	thread_exit=0;
+	//Break
+	SDL_Event event;
+	event.type = SFM_BREAK_EVENT;
+	SDL_PushEvent(&event);
+
 	return 0;
 }
 
@@ -306,10 +317,10 @@ int main(int argc, char* argv[])
 			}else{
 				//Exit Thread
 				thread_exit=1;
-				break;
 			}
 		}else if(event.type==SDL_QUIT){
 			thread_exit=1;
+		}else if(event.type==SFM_BREAK_EVENT){
 			break;
 		}
 
