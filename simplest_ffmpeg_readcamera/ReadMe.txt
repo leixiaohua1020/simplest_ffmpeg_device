@@ -7,6 +7,7 @@
  Communication University of China / Digital TV Technology
  http://blog.csdn.net/leixiaohua1020
 
+ 
  本程序实现了本地摄像头数据的获取解码和显示。是基于FFmpeg
  的libavdevice类库最简单的例子。通过该例子，可以学习FFmpeg中
  libavdevice类库的使用方法。
@@ -18,6 +19,7 @@
           备的名称。
  在Linux下则可以使用video4linux2读取摄像头设备。
 
+ 
  This software read data from Computer's Camera and play it.
  It's the simplest example about usage of FFmpeg's libavdevice Library. 
  It's suiltable for the beginner of FFmpeg.

@@ -7,6 +7,7 @@ leixiaohua1020@126.com
 Communication University of China / Digital TV Technology
 http://blog.csdn.net/leixiaohua1020
 
+
 本程序实现了屏幕录制功能。可以录制并播放桌面数据。是基于FFmpeg
 的libavdevice类库最简单的例子。通过该例子，可以学习FFmpeg中
 libavdevice类库的使用方法。
@@ -15,6 +16,7 @@ libavdevice类库的使用方法。
             抓取桌面的时候，输入URL为“desktop”。
  2.dshow: 使用Directshow。注意需要安装额外的软件screen-capture-recorder
 在Linux下则可以使用x11grab录制屏幕。
+
 
 This software capture screen of computer. It's the simplest example
 about usage of FFmpeg's libavdevice Library. 

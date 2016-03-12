@@ -226,8 +226,8 @@ int main(int argc, char* argv[])
 	AVFrame	*pFrame,*pFrameYUV;
 	pFrame=av_frame_alloc();
 	pFrameYUV=av_frame_alloc();
-	//uint8_t *out_buffer=(uint8_t *)av_malloc(avpicture_get_size(PIX_FMT_YUV420P, pCodecCtx->width, pCodecCtx->height));
-	//avpicture_fill((AVPicture *)pFrameYUV, out_buffer, PIX_FMT_YUV420P, pCodecCtx->width, pCodecCtx->height);
+	//unsigned char *out_buffer=(unsigned char *)av_malloc(avpicture_get_size(AV_PIX_FMT_YUV420P, pCodecCtx->width, pCodecCtx->height));
+	//avpicture_fill((AVPicture *)pFrameYUV, out_buffer, AV_PIX_FMT_YUV420P, pCodecCtx->width, pCodecCtx->height);
 	//SDL----------------------------
 	if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER)) {  
 		printf( "Could not initialize SDL - %s\n", SDL_GetError()); 
@@ -262,7 +262,7 @@ int main(int argc, char* argv[])
 #endif  
 
 	struct SwsContext *img_convert_ctx;
-	img_convert_ctx = sws_getContext(pCodecCtx->width, pCodecCtx->height, pCodecCtx->pix_fmt, pCodecCtx->width, pCodecCtx->height, PIX_FMT_YUV420P, SWS_BICUBIC, NULL, NULL, NULL); 
+	img_convert_ctx = sws_getContext(pCodecCtx->width, pCodecCtx->height, pCodecCtx->pix_fmt, pCodecCtx->width, pCodecCtx->height, AV_PIX_FMT_YUV420P, SWS_BICUBIC, NULL, NULL, NULL); 
 	//------------------------------
 	SDL_Thread *video_tid = SDL_CreateThread(sfp_refresh_thread,NULL);
 	//
@@ -290,7 +290,7 @@ int main(int argc, char* argv[])
 						pFrameYUV->linesize[0]=bmp->pitches[0];
 						pFrameYUV->linesize[1]=bmp->pitches[2];   
 						pFrameYUV->linesize[2]=bmp->pitches[1];
-						sws_scale(img_convert_ctx, (const uint8_t* const*)pFrame->data, pFrame->linesize, 0, pCodecCtx->height, pFrameYUV->data, pFrameYUV->linesize);
+						sws_scale(img_convert_ctx, (const unsigned char* const*)pFrame->data, pFrame->linesize, 0, pCodecCtx->height, pFrameYUV->data, pFrameYUV->linesize);
 
 #if OUTPUT_YUV420P  
 						int y_size=pCodecCtx->width*pCodecCtx->height;    
